@@ -1,0 +1,12 @@
+{
+    "name": "@src/product",
+    "version": "1.0.0",
+    "main": "index.js",
+    "scripts": {
+        "build": "tsc"
+    },
+    "dependencies": {
+        "@aws-sdk/client-dynamodb": "^3.190.0",
+        "@aws-sdk/util-dynamodb": "^3.190.0"
+    }
+}
