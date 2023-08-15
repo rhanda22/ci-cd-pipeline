@@ -19,10 +19,9 @@ interface PocServiceProps{
 
 export class Services extends Construct{
 
-    public readonly productMicroservice: NodejsFunction;
+    
     public readonly subscribeMicroservice: NodejsFunction;
-    public readonly roleMicroservice: NodejsFunction;
-
+    
     constructor(scope:Construct, id:string, props: PocServiceProps){
         super(scope,id)
         
