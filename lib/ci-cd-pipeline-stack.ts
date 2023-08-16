@@ -16,10 +16,13 @@ export class CiCdPipelineStack extends cdk.Stack {
         commands: ['npm ci', 'npm run build', 'npx cdk synth']
       })
     });
+    
+    const testStage = new PipelineAppStage(this,"nonProd",{});
 
-    const testStage = pipeline.addStage(new PipelineAppStage(this,"nonProd",{}));
-    testStage.addPost(new ManualApprovalStep('Manual Approval to production'));
+    const tsd = pipeline.addStage(testStage);
+    tsd.addPost(new ManualApprovalStep('Manual Approval to production'));
     const prodStage = pipeline.addStage(new PipelineAppStage(this,"prod",{}));
+    
 
   }
 }

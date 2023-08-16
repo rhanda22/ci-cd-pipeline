@@ -6,7 +6,7 @@ export class PipelineAppStage extends Cdk.Stage{
     constructor(scope:Construct, stage:string, props?:Cdk.StageProps){
         super(scope,stage,props);
 
-        const services = new Services(this,'pocServices',{stage:stage});
+        new Services(this,'pocServices',{stage:stage});
     
     }
 }

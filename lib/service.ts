@@ -1,9 +1,11 @@
 import { ITable } from "aws-cdk-lib/aws-dynamodb";
 import { Runtime } from "aws-cdk-lib/aws-lambda";
-import { NodejsFunction, NodejsFunctionProps } from "aws-cdk-lib/aws-lambda-nodejs";
 import { Construct } from "constructs";
 import { join } from "path";
-
+import { Function, Code } from "aws-cdk-lib/aws-lambda";
+import { handler } from "../lambda/handler";
+import * as path from 'path';
+import * as Cdk from 'aws-cdk-lib';
 
 interface ServiceProps{
     name: string,
@@ -17,43 +19,23 @@ interface PocServiceProps{
 
 
 
-export class Services extends Construct{
+export class Services extends Cdk.Stack{
 
     
-    public readonly subscribeMicroservice: NodejsFunction;
+    public readonly subscribeMicroservice: Function;
     
-    constructor(scope:Construct, id:string, props: PocServiceProps){
+    constructor(scope:Construct, id:string,props: PocServiceProps){
         super(scope,id)
-        
-        this.subscribeMicroservice = this.createSubscribeFunction(props.stage)
-      
-  
 
+        new Function(this,'subscribeLambdaFunction',{
+          runtime: Runtime.NODEJS_14_X,
+          handler:'handler.handler',
+          code: Code.fromAsset(path.join(__dirname,'../lambda')),
+          environment:{'stage':props.stage}
+        });
+ 
     }
 
-
-    
-      private createSubscribeFunction(stage: string) : NodejsFunction {
-        const nodeJsFunctionProps: NodejsFunctionProps = {
-          bundling: {
-            externalModules: [
-              'aws-sdk'
-            ]
-          },
-          environment: {
-            STAGE: stage
-          },
-          runtime: Runtime.NODEJS_14_X
-        }
-    
-        // Product microservices lambda function
-        const subscribeFunction = new NodejsFunction(this, 'subscribeLambdaFunction', {
-          entry: join(__dirname, `/../src/subscriber/index.js`),
-          ...nodeJsFunctionProps,
-        });
-        
-        return subscribeFunction;
-      }
     
 
    
