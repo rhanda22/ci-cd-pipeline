@@ -21,12 +21,28 @@ export class CiCdPipelineStack extends cdk.Stack {
 
 
     const tsd = pipeline.addStage(testStage);
-    tsd.addPre(new CodeBuildStep('unit-test',{
+    tsd.addPre(new CodeBuildStep('Unit-test',{
       commands:['npm ci', 'npm test']
-    }))
+    }));
+
+    tsd.addPre(new CodeBuildStep('SAST',{
+      commands:['npm ci', 'npm test']
+    }));
+
+    tsd.addPre(new CodeBuildStep('Quality Gate',{
+      commands:['npm ci', 'npm test']
+    }));
+
+    tsd.addPre(new CodeBuildStep('Integration Test',{
+      commands:['npm ci', 'npm test']
+    }));
+
+    tsd.addPre(new CodeBuildStep('DAST',{
+      commands:['npm ci', 'npm test']
+    }));
+
     tsd.addPost(new ManualApprovalStep('Manual Approval to production'));
     const prodStage = pipeline.addStage(new PipelineAppStage(this,"prod",{}));
     
-
   }
 }
