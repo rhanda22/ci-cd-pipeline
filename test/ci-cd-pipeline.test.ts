@@ -1,17 +1,10 @@
-// import * as cdk from 'aws-cdk-lib';
-// import { Template } from 'aws-cdk-lib/assertions';
-// import * as CiCdPipeline from '../lib/ci-cd-pipeline-stack';
+import { handler } from "../lambda/handler"
 
-// example test. To run these tests, uncomment this file along with the
-// example resource in lib/ci-cd-pipeline-stack.ts
-test('SQS Queue Created', () => {
-//   const app = new cdk.App();
-//     // WHEN
-//   const stack = new CiCdPipeline.CiCdPipelineStack(app, 'MyTestStack');
-//     // THEN
-//   const template = Template.fromStack(stack);
+describe('Hello describe test suite',()=>{
 
-//   template.hasResourceProperties('AWS::SQS::Queue', {
-//     VisibilityTimeout: 300
-//   });
-});
+    test('handler should return 200',async ()=>{
+        const result = await handler("Hello","world");
+        expect(result.statusCode == 200);
+    })
+
+})
