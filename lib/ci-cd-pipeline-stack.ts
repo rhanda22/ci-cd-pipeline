@@ -37,13 +37,7 @@ export class CiCdPipelineStack extends cdk.Stack {
       commands:['npm ci', 'npm test']
     }),new CodeBuildStep('Quality Gate',{
       commands:['npm ci', 'npm test']
-    }),new CodeBuildStep('SAST',{
-      commands:['npm ci', 'npm test']
     }),new CodeBuildStep('Integration Test',{
-      commands:['npm ci', 'npm test']
-    }),new CodeBuildStep('Performance Test',{
-      commands:['npm ci', 'npm test']
-    }),new CodeBuildStep('DAST',{
       commands:['npm ci', 'npm test']
     }));
 
