@@ -3,6 +3,7 @@ import { Pipeline } from 'aws-cdk-lib/aws-codepipeline';
 import { CodeBuildStep, CodePipeline,CodePipelineSource, ManualApprovalStep, ShellStep, Step } from 'aws-cdk-lib/pipelines';
 import { Construct } from 'constructs';
 import { PipelineAppStage } from './stage';
+import { PipelineValidateStage } from './validate-stage';
 // import * as sqs from 'aws-cdk-lib/aws-sqs';
 
 export class CiCdPipelineStack extends cdk.Stack {
@@ -19,7 +20,7 @@ export class CiCdPipelineStack extends cdk.Stack {
     
   
 
-    const valid = pipeline.addStage(new PipelineAppStage(this,"Validate",{
+    const valid = pipeline.addStage(new PipelineValidateStage(this,"Validate",{
     }));
 
     valid.addPre(new CodeBuildStep('Unit-test',{
@@ -29,7 +30,7 @@ export class CiCdPipelineStack extends cdk.Stack {
         commands:['npm ci', 'npm test']}));
     
     
-    const secure = pipeline.addStage(new PipelineAppStage(this,"Secure",{
+    const secure = pipeline.addStage(new PipelineValidateStage(this,"Secure",{
     }));
 
     secure.addPre(new CodeBuildStep('SAST',{
