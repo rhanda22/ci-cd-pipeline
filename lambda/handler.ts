@@ -3,7 +3,7 @@ export async function handler(event:string, context:string) {
   
   console.log(' Stage Name ::'+ process.env.stage);
 
-  console.log('Adding a update to function');
+  console.log('Making a change for a demo');
 
   return{
     body:'Hello from Lambda Function',
