@@ -17,31 +17,41 @@ export class CiCdPipelineStack extends cdk.Stack {
       })
     });
     
-    const testStage = new PipelineAppStage(this,"nonProd",{
-      
-    });
+  
 
+    const valid = pipeline.addStage(new PipelineAppStage(this,"Validate",{
+    }));
 
-    const tsd = pipeline.addStage(testStage);
+    valid.addPre(new CodeBuildStep('Unit-test',{
+      commands:['npm ci', 'npm test']}));
 
-    const unitTest = new CodeBuildStep('DAST',{
-      commands:['npm ci', 'npm test']
-    });
+    valid.addPost(new CodeBuildStep('Sonarqube',{
+        commands:['npm ci', 'npm test']}));
     
-    const preSteps = [new CodeBuildStep('DAST',{
-      commands:['npm ci', 'npm test']
-    })]
+    
+    const secure = pipeline.addStage(new PipelineAppStage(this,"Secure",{
+    }));
+
+    secure.addPre(new CodeBuildStep('SAST',{
+      commands:['npm ci', 'npm test']}));
+
+    secure.addPost(new CodeBuildStep('DAST',{
+        commands:['npm ci', 'npm test']}));
+        
+        
+  
+
+
+    const testStage = pipeline.addStage(new PipelineAppStage(this,"nonProd",{
+    }));
+
 
     
-    tsd.addPre(new CodeBuildStep('Unit-test',{
-      commands:['npm ci', 'npm test']
-    }),new CodeBuildStep('Quality Gate',{
-      commands:['npm ci', 'npm test']
-    }),new CodeBuildStep('Integration Test',{
+    testStage.addPre(new CodeBuildStep('Integration Test',{
       commands:['npm ci', 'npm test']
     }));
 
-    tsd.addPost(new ManualApprovalStep('Manual Approval to production'));
+    testStage.addPost(new ManualApprovalStep('Manual Approval to production'));
     const prodStage = pipeline.addStage(new PipelineAppStage(this,"prod",{}));
     
   }
