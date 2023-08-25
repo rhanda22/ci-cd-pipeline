@@ -4,6 +4,7 @@ import { CodeBuildStep, CodePipeline,CodePipelineSource, ManualApprovalStep, She
 import { Construct } from 'constructs';
 import { PipelineAppStage } from './stage';
 import { PipelineValidateStage } from './validate-stage';
+import { CodeBuildAction } from 'aws-cdk-lib/aws-codepipeline-actions';
 // import * as sqs from 'aws-cdk-lib/aws-sqs';
 
 export class CiCdPipelineStack extends cdk.Stack {
@@ -18,7 +19,7 @@ export class CiCdPipelineStack extends cdk.Stack {
       })
     });
     
-  
+    
 
     const valid = pipeline.addStage(new PipelineValidateStage(this,"Validate",{
     }));
@@ -27,7 +28,7 @@ export class CiCdPipelineStack extends cdk.Stack {
       commands:['npm ci', 'npm test']}));
 
     valid.addPost(new CodeBuildStep('Sonarqube',{
-        commands:['npm ci', 'npm test']}));
+        commands:['npm ci', 'npm run coverage']}));
     
     
     const secure = pipeline.addStage(new PipelineValidateStage(this,"Secure",{

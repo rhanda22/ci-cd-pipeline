@@ -1,0 +1,7 @@
+organization=rhanda22
+projectKey=rhanda22_ci-cd-pipeline
+serverUrl=https://sonarcloud.io
+serverVersion=8.0.0.45575
+dashboardUrl=https://sonarcloud.io/dashboard?id=rhanda22_ci-cd-pipeline
+ceTaskId=AYot8z23_tXOpk6gSiOI
+ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AYot8z23_tXOpk6gSiOI
