@@ -24,6 +24,7 @@ export class CiCdPipelineStack extends cdk.Stack {
     const valid = pipeline.addStage(new PipelineValidateStage(this,"Validate",{
     }));
 
+
     valid.addPre(new CodeBuildStep('Unit-test',{
       commands:['npm ci', 'npm test']}));
 
