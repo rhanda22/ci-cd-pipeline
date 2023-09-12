@@ -14,7 +14,9 @@ export class CiCdPipelineStack extends cdk.Stack {
      const pipeline = new CodePipeline(this, 'Pipeline', {
       pipelineName: 'DemoPipeline',
       synth: new ShellStep('Synth', {
-        input: CodePipelineSource.gitHub('rhanda22/ci-cd-pipeline', 'main'),
+        input: CodePipelineSource.gitHub('rhanda22/ci-cd-pipeline', 'main',{
+          authentication: cdk.SecretValue.secretsManager('github-token')
+        }),
         commands: ['npm ci', 'npm run build', 'npx cdk synth']
       })
     });

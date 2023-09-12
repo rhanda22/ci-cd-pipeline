@@ -1,0 +1,18 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 14  # You can specify the Node.js version you need
+
+  pre_build:
+    commands:
+      - npm ci     # Install project dependencies
+      - npm run build  # Build your CDK application (adjust this command as needed)
+
+  build:
+    commands:
+      - cdk deploy  # Deploy your CDK stack (replace MyStackName with your stack name)
+
+artifacts:
+  files: '**/*'  # Specify the files to be included in the build artifact
