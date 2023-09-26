@@ -5,9 +5,9 @@ export async function handler(event:string, context:string) {
 
   console.log('Making a change for a demo to trigger');
 
-  console.log('Making a change for a demo to trigger 2');
+  console.log('Making a change for a demo to trigger 1');
 
-  console.log('Making a change for a demo to trigger 8');
+  console.log('Making a change for a demo to trigger 9');
 
 
 
