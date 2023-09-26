@@ -5,6 +5,9 @@ export async function handler(event:string, context:string) {
 
   console.log('Making a change for a demo to trigger');
 
+  console.log('Making a change for a demo to trigger 2');
+
+
   return{
     body:'Hello from Lambda Function',
     statusCode: 200
