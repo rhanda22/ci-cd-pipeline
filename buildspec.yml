@@ -1,0 +1,13 @@
+version: 0.2
+phases:
+  install:
+    commands:
+      - npm install
+  build:
+    commands:
+      - npm run build
+  post_build:
+    commands:
+      - aws lambda update-function-code --function-name MyLambdaFunction --zip-file fileb://./dist/my-lambda-function.zip
+artifacts:
+  files: dist/my-lambda-function.zip
